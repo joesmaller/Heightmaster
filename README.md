@@ -42,91 +42,89 @@ I have discovered that using a very large heightmap often will lead to you being
 
 ### Terrain Settings
 
-#### Terrain Origin
+* _**Terrain Origin**_ - 
 This is a Vector3, which is the centre of the generated terrain.
 
-#### Terrain Scale
+* _**Terrain Scale**_ - 
 This is a value between 0 - 250 which will amplify the terrain. The higher the scale, the taller the terrain. However when the terrain is taller it will often lead to being much more rough and more terraces, so a value of >120 is usually the best.
 
-#### Terrain Smooth Depth
+* _**Terrain Smooth Depth**_ - 
 This is a value between 1 - 50, which will give the terrain within the depth a smoothed occupancy, otherwise it will have an occupancy of 1.
 
-#### Remove Level 0
+* _**Remove Level 0**_ - 
 A bool value which when active, will not generate any terrain which is sitting at a depth of 0. (This could be useful if you wanted to generate some kind of floating islands).
 
-#### Extra Material Depth
+* _**Extra Material Depth**_ - 
 This currently doesn't do anything.
 
 ### Materials
 
-#### Default Material
+* _**Default Material**_ - 
 This is the name of the material that will be generated if the material mode is set to disabled.
 
-#### Material Mode
+* _**Material Mode**_ - 
 This is the mode which to get the materials from the current texture map. It will usually try and find the material that matches the texture the best.
+	* _**Disabled**_ - 
+	This option will not generate materials from the texture map, and instead will just use the default material.
 
-The options and what they do are as follows:
-##### Disabled
-This option will not generate materials from the texture map, and instead will just use the default material.
+	* _**Roblox Default**_ - 
+	This uses the material colors located under Workspace > Terrain > MaterialColors to find the closest material to the texture.
 
-##### Roblox Default
-This uses the material colors located under Workspace > Terrain > MaterialColors to find the closest material to the texture.
+	* _**Enhanced**_ - 
+	This instead uses the average color of the material's texture to get the color, this might be more accurate than Roblox Default.
 
-##### Enhanced
-This instead uses the average color of the material's texture to get the color, this might be more accurate than Roblox Default.
-
-##### Custom
-This option lets you assign specific colors to materials in the 'Custom Materials' section of the plugin, and uses those colors to find the material.
+	* _**Custom**_ - 
+	This option lets you assign specific colors to materials in the 'Custom Materials' section of the plugin, and uses those colors to find the material.
 
 ### Subsurface Material Settings
 These properties define the materials of under the surface (By default, 75% of the terrain will be rock).
 
-#### Use Subsurface Material
+* _**Use Subsurface Material**_ - 
 A bool to enable or disable the generation of a subsurface material.
 
-#### Subsurface Material
+* _**Subsurface Material**_ - 
 What material will be used under the surface.
 
-#### Subsurface Height
+* _**Subsurface Height**_ - 
 A float that defines how high up the subsurface material will go.
 
 ### Water
 These are the controls of how the water is generated.
 
-#### Enable Water
+* _**Enable Water**_ - 
 Enables or disabled water.
 
-#### Water Height
+* _**Water Height**_ - 
 A 0 - 255 value of how high the water will generate.
 
-#### Water Size
+* _**Water Size**_ - 
 How big the water area will be (Heightmap Size * Water Size).
 
-#### Use Subwater Material
+* _**Use Subwater Material**_ - 
 Enable or disable the use of a material that is under the water. (Rather than just using the material from the texture map).
 
-#### Subwater Material
+* _**Subwater Material**_ - 
 What material will be used if Use Subwater Material is enabled.
 
-#### Generate Seabed
+* _**Generate Seabed**_ - 
 This property will generate a layer of material under the water, to cap it.
 
-#### Seabed Depth
+* _**Seabed Depth**_ - 
 This a value that controls how far down the seabed will go.
 
 ### Beach
 The beach allows you to set a material to generate above and below the water height.
 
-#### Enable Beach
+* _**Enable Beach**_ - 
 Enable or disable beach generation.
 
-#### Beach Height
+* _**Beach Height**_ - 
 How far above the water height will the beach generate.
 
-#### Beach Depth
+* _**Beach Depth**_ - 
 How far below the water height will the beach generate.
 
-#### Beach Material
+* _**Beach Material**_ - 
 The material used by the beach.
 
 ### Allowed Materials

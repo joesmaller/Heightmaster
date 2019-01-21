@@ -29,9 +29,6 @@ public class loader {
 		
 		int returnValue = jfc.showOpenDialog(null);
 		
-		//String heightmapfile = "D:/Users/Joe/Pictures/Heightmap/NewHeightmap/HEIGHTMAPOUTPUT.png";
-		//String materialmapfile = "D:/Users/Joe/Pictures/Heightmap/SandyMountain.png";
-		//String outputfile = heightmapfile.substring(0, heightmapfile.length()-4).concat(".lua");
 		String outputfile = null;
 		
 		File hmFile = null;

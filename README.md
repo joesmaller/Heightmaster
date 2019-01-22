@@ -9,7 +9,7 @@ The plugin uses two major components, a java heightmap to lua converter, and the
 You can download the plugin from [here](https://www.roblox.com/library/2768461796/Heightmaster).
 
 ## Java application
-The Java application isn't neccesarry, and if you would like, you can always create your own method for converting the heightmap into lua. Heightmaster just converts the heightmaps into a lua file which looks like this:
+The Java application isn't neccesarry, and if you would like, you can always create your own method for converting the heightmap into lua. Heightmaster just converts the heightmaps into a lua file which looks like this, where the first number in an entry is the height of the heightmap, and the second table is the the colour value from the texturemap:
 ```lua
 h = {}
 h[1] = {

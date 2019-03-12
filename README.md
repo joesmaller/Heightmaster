@@ -54,8 +54,14 @@ This is a value between 1 - 50, which will give the terrain within the depth a s
 * _**Remove Level 0**_ - 
 A bool value which when active, will not generate any terrain which is sitting at a depth of 0. (This could be useful if you wanted to generate some kind of floating islands).
 
-* _**Extra Material Depth**_ - 
-This currently doesn't do anything.
+* _**Invert Terrain**_ - 
+Inverts the terrain so it generates downwards from the origin, useful for making things like caves or interiors.
+
+* _**Optimize Terrain**_ - 
+Rounds the voxel occupancies to help reduce the file size of the terrain.
+
+* _**Remove Excess Terrain**_ - 
+This will remove terrain that is under the lowest point in the hightmap (Terrain that is otherwise unused).
 
 ### Materials
 
@@ -93,6 +99,9 @@ These are the controls of how the water is generated.
 
 * _**Enable Water**_ - 
 Enables or disabled water.
+
+* _**Water Occupancy**_ - 
+The voxel occupancy of the water.
 
 * _**Water Height**_ - 
 A 0 - 255 value of how high the water will generate.

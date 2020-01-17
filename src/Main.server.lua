@@ -21,21 +21,34 @@ local Store
 local Toolbar
 
 -- Constants
-local PLUGIN_NAME = "NewPlugin"
-local TOOLBAR_NAME = "New Plugin"
+local PLUGIN_NAME = "Heightmaster"
+local TOOLBAR_NAME = "Heightmaster"
 local ELEMENTS = {
-	NEWPLUGIN = {
+	{
 		ENABLED = true;
 		GUI_ENABLED = true;
-		BUTTON_ID = "NewPluginButton";
-		BUTTON_TOOLTIP = "A brand new plugin";
-		BUTTON_ICON = "";
-		BUTTON_TITLE = "New Plugin";
+		BUTTON_ID = "HeightmasterButtonGenerator";
+		BUTTON_TOOLTIP = "The tools to generate the heightmap";
+		BUTTON_ICON = "rbxassetid://4575063105";
+		BUTTON_TITLE = "Generator";
 		BUTTON_FUNCTION = nil;
-		GUI_ID = "NewPluginGui";
-		GUI_TITLE = "New Plugin";
-		GUI_DOCKWIDGETINFO = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Float, false, false, 300, 300);
-		GUI_APP = require(Libraries:WaitForChild("PluginApp"));
+		GUI_ID = "HeightmasterGuiGenerator";
+		GUI_TITLE = "Generator";
+		GUI_DOCKWIDGETINFO = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Right, false, false, 300, 300);
+		GUI_APP = require(Libraries:WaitForChild("GeneratorApp"));
+	};
+	{
+		ENABLED = true;
+		GUI_ENABLED = true;
+		BUTTON_ID = "HeightmasterButtonImporter";
+		BUTTON_TOOLTIP = "Select a heightmap and optional colormap to use with Heightmaster";
+		BUTTON_ICON = "rbxassetid://4575063250";
+		BUTTON_TITLE = "Importer";
+		BUTTON_FUNCTION = nil;
+		GUI_ID = "HeightmasterGuiImporter";
+		GUI_TITLE = "Importer";
+		GUI_DOCKWIDGETINFO = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Right, false, false, 300, 300);
+		GUI_APP = require(Libraries:WaitForChild("ImporterApp"));
 	}
 }
 

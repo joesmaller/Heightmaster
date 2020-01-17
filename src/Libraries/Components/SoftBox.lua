@@ -19,7 +19,7 @@
 ]]
 
 -- Constants
-local DEFAULT_EDGESIZE = 2;
+local DEFAULT_EDGESIZE = 1;
 local DEFAULT_COLOR = Color3.new(1, 1, 1);
 local DEFAULT_TRANSPARENCY = 0;
 local DEFAULT_ANCHORPOINT = Vector2.new(0.5, 0.5);

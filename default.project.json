@@ -4,7 +4,7 @@
     "$className": "DataModel",
     "ServerStorage": {
       "$className": "ServerStorage",
-      "NewPlugin": {
+      "Heightmaster": {
         "$className": "Folder",
         "$path": "src"
       }

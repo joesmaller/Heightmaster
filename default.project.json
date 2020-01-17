@@ -1,0 +1,13 @@
+{
+  "name": "Plugin",
+  "tree": {
+    "$className": "DataModel",
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "NewPlugin": {
+        "$className": "Folder",
+        "$path": "src"
+      }
+    }
+  }
+}

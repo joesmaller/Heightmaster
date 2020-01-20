@@ -25,28 +25,24 @@ local PLUGIN_NAME = "Heightmaster"
 local TOOLBAR_NAME = "Heightmaster"
 local ELEMENTS = {
 	{
+		ELEMENT_ID = "Heightmaster Generator";
+		ELEMENT_TITLE = "Generator";
 		ENABLED = true;
 		GUI_ENABLED = true;
-		BUTTON_ID = "HeightmasterButtonGenerator";
 		BUTTON_TOOLTIP = "The tools to generate the heightmap";
 		BUTTON_ICON = "rbxassetid://4575063105";
-		BUTTON_TITLE = "Generator";
 		BUTTON_FUNCTION = nil;
-		GUI_ID = "HeightmasterGuiGenerator";
-		GUI_TITLE = "Generator";
 		GUI_DOCKWIDGETINFO = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Right, false, false, 300, 300);
 		GUI_APP = require(Libraries:WaitForChild("GeneratorApp"));
 	};
 	{
+		ELEMENT_ID = "Heightmaster Importer";
+		ELEMENT_TITLE = "Importer";
 		ENABLED = true;
 		GUI_ENABLED = true;
-		BUTTON_ID = "HeightmasterButtonImporter";
 		BUTTON_TOOLTIP = "Select a heightmap and optional colormap to use with Heightmaster";
 		BUTTON_ICON = "rbxassetid://4575063250";
-		BUTTON_TITLE = "Importer";
 		BUTTON_FUNCTION = nil;
-		GUI_ID = "HeightmasterGuiImporter";
-		GUI_TITLE = "Importer";
 		GUI_DOCKWIDGETINFO = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Right, false, false, 300, 300);
 		GUI_APP = require(Libraries:WaitForChild("ImporterApp"));
 	}
@@ -66,14 +62,16 @@ Toolbar = plugin:CreateToolbar(TOOLBAR_NAME)
 local function createElement(element)
 	
 	if (element.ENABLED) then
-		local elementButton = Toolbar:CreateButton(element.BUTTON_ID, element.BUTTON_TOOLTIP, element.BUTTON_ICON, element.BUTTON_TITLE)
+		local elementButton = Toolbar:CreateButton(element.ELEMENT_ID, element.BUTTON_TOOLTIP, element.BUTTON_ICON, element.ELEMENT_TITLE)
 
 		-- Create gui instead of having a single button
 		if (element.GUI_ENABLED) then
 			assert(element.GUI_APP, "Roact gui must be provided for element")
 			
-			local elementGui = plugin:CreateDockWidgetPluginGui(element.GUI_ID, element.GUI_DOCKWIDGETINFO)
-			elementGui.Title = element.GUI_TITLE
+			local elementGui = plugin:CreateDockWidgetPluginGui(element.ELEMENT_ID, element.GUI_DOCKWIDGETINFO)
+			elementGui.Name = element.ELEMENT_ID
+			elementGui.Title = element.ELEMENT_TITLE
+			elementGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 			local elementApp = Roact.mount(element.GUI_APP(Store, Roact, RoactRodux), elementGui)
 

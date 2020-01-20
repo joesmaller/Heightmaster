@@ -1,126 +1,98 @@
 -- Plugin Button
 -- Joe (ITBV)
--- January 9, 2020
+-- January 18, 2020
 
 
 
 -- Constants
-local HOVER_TIME = 0.1
-local GUIDE_COLOR = Enum.StudioStyleGuideColor.Button
-local GUIDE_DEFAULT = Enum.StudioStyleGuideModifier.Default
-local GUIDE_SELECTED = Enum.StudioStyleGuideModifier.Selected
-local GUIDE_PRESSED = Enum.StudioStyleGuideModifier.Pressed
-local GUIDE_DISABLED = Enum.StudioStyleGuideModifier.Disabled
-local GUIDE_HOVER = Enum.StudioStyleGuideModifier.Hover
+local INTERACT_TIME = 0.1
+local COLOR_BUTTON = Enum.StudioStyleGuideColor.Button
+local COLOR_TEXT = Enum.StudioStyleGuideColor.MainText
+local DEFAULT = Enum.StudioStyleGuideModifier.Default
+local PRESSED = Enum.StudioStyleGuideModifier.Pressed
+local HOVER = Enum.StudioStyleGuideModifier.Hover
 
--- Variables
-local lastUsed = tick()
-
+-- Components
 local SoftBox = require(script.Parent:WaitForChild("SoftBox"))
 local TextButton = require(script.Parent:WaitForChild("TextButton"))
 
-local function join(original, children)
-	local newTable = {}
-	if (original) then
-		for i,v in pairs(original) do
-			newTable[i] = v
-		end
-	end
-	if (children) then
-		for i,v in pairs(children) do
-			newTable[i] = v
-		end
-	end
-	return newTable
-end
+
+--// Code //--
 
 return function(Roact)
 	local PluginButton = Roact.PureComponent:extend("PluginButton")
 
+	function PluginButton:update(modifier, hovering, lastInteracted)
+		self:setState(function(state)
+			local newState = {}
+			for i,v in ipairs(state) do
+				newState[i] = v
+			end
+			if (typeof(modifier) == "EnumItem") then
+				newState.Color = settings().Studio.Theme:GetColor(COLOR_BUTTON, modifier)
+				newState.TextColor = settings().Studio.Theme:GetColor(COLOR_TEXT, modifier)
+			end
+			if (type(hovering) == "boolean") then
+				newState.Hovering = hovering
+			end
+			if (type(lastInteracted) == "number") then
+				newState.LastInteracted = lastInteracted
+			end
+			return newState
+		end)
+	end
+
 	function PluginButton:init()
-		self:setState(function(state)
-			return {
-				Hovering = false;
-				Color = settings().Studio.Theme:GetColor(self.props.Guide or GUIDE_COLOR, GUIDE_DEFAULT);
-			}
-		end)
-	end
-
-	function PluginButton:setHovering(bool)
-		self:setState(function(state)
-			local newState = {}
-			for i,v in pairs(state) do
-				newState[i] = v
-			end
-			newState.Hovering = bool;
-			return newState
-		end)
-	end
-
-	function PluginButton:setColor(color)
-		self:setState(function(state)
-			local newState = {}
-			for i,v in pairs(state) do
-				newState[i] = v
-			end
-			newState.Color = settings().Studio.Theme:GetColor(self.props.Guide or GUIDE_COLOR, color)
-			return newState
-		end)
+		self:update(DEFAULT, false, tick())
 	end
 
 	function PluginButton:render()
 		local props = self.props
-
-		local leaveEvent = function()
-			self:setHovering(false)
-			self:setColor(GUIDE_DEFAULT)
-		end
-		local enterEvent = function()
-			if (tick() - lastUsed <= HOVER_TIME) then return end
-			lastUsed = tick()
-			self:setHovering(true)
-			self:setColor(GUIDE_HOVER)
-		end
+		local state = self.state
 
 		return Roact.createElement(SoftBox(Roact), {
-			Color = self.state.Color;
+			Color = state.Color;
 
-			AnchorPoint = props.Anchorpoint;
+			AnchorPoint = props.AnchorPoint;
 			Position = props.Position;
-			Size = props.Size or UDim2.new(0, 100, 0, 50);
+			Size = props.Size;
 
-			MouseLeave = leaveEvent;
-			MouseEnter = enterEvent;
-
-		}, join(props[Roact.Children], {
+			MouseEnter = function(rbx)
+				if (tick() - state.LastInteracted <= INTERACT_TIME or state.Hovering) then return end
+				self:update(HOVER, true, tick())
+			end;
+			MouseLeave = function(rbx)
+				self:update(DEFAULT, false)
+			end
+		}, {
 			Button = Roact.createElement(TextButton(Roact), {
+				Active = true;
 				AutoButtonColor = false;
 
 				Text = props.Text;
-				TextColor3 = props.TextColor3;
+				TextColor3 = state.TextColor;
+				TextWrapped = true;
+				TextScaled = true;
+				
+				MinTextSize = props.MinTextSize;
+				MaxTextSize = props.MaxTextSize;
 
-				Shadow = props.Shadow;
-				ShadowOffset = props.ShadowOffset;
-
+				Shadow = false;
+				
 				MouseButton1Down = function(rbx)
-					self:setColor(GUIDE_PRESSED)
+					if (tick() - state.LastInteracted <= INTERACT_TIME) then return end
+					self:update(PRESSED, nil, tick())
 				end;
-
-				Activated = function(rbx)
-					if (props.Activated) then
-						props.Activated(rbx)
-					end
-				end;
-
 				MouseButton1Up = function(rbx)
-					if (self.state.Hovering) then
-						self:setColor(GUIDE_HOVER)
+					if (state.Hovering) then
+						self:update(HOVER)
 					else
-						self:setColor(GUIDE_DEFAULT)
+						self:update(DEFAULT)
 					end
+					props.Activated()
 				end;
 			})
-		}))
+		})
 	end
 
 	return PluginButton

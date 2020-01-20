@@ -51,7 +51,7 @@ return function(Roact)
 			BorderSizePixel = 0;
 			Position = UDim2.new(0.5, shadowOffset.X or 0, 0.5, shadowOffset.Y or 0);
 			Size = UDim2.new(1, 0, 1, 0);
-			Visible = props.Shadow;
+			Visible = props.Shadow or props.Visible;
 			ZIndex = props.ZIndex and props.ZIndex - 1 or 0;
 		}, {
 			TextConstraint = Roact.createElement("UITextSizeConstraint", {

@@ -140,6 +140,7 @@ return function(Roact)
 
 				-- GuiObject
 				Visible = props.Shadow;
+				Shadow = props.Shadow;
 				ZIndex = props.ZIndex;
 
 				-- TextConstraint

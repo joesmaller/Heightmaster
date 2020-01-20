@@ -251,6 +251,9 @@ stds.roblox = {
 			"deg", "exp", "floor", "fmod", "frexp", "ldexp", "log", "log10", "max", "min", "modf",
 			"noise", "pow", "rad", "random", "randomseed", "sign", "sin", "sinh", "sqrt", "tan",
 			"tanh", "huge", "pi"}),
+		
+		bit32 = def_fields({"arshift", "band", "bnot", "bor", "bxor", "extract",
+			"replace", "lrotate", "lshift", "rrotate", "rshift"}),
 
 		debug = def_fields({"traceback", "profilebegin", "profileend"}),
 

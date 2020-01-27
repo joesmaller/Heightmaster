@@ -4,6 +4,10 @@
 
 
 
+-- Services
+local Studio = settings().Studio
+local Theme = Studio.Theme
+
 -- Libraries
 local Components = require(script.Parent:WaitForChild("Components"))
 local Roact
@@ -23,18 +27,40 @@ return function(store, roact, roactRodux)
 			AnchorPoint = Vector2.new(0.5, 0.5);
 			Size = UDim2.new(1, 0, 1, 0);
 			Position = UDim2.new(0.5, 0, 0.5, 0);
-			BackgroundColor3 = settings().Studio.Theme:GetColor(Enum.StudioStyleGuideColor.MainBackground);
+			BackgroundColor3 = Theme:GetColor(Enum.StudioStyleGuideColor.MainBackground);
 		}, {
 			GeneratorButton = Roact.createElement(Components.PluginButton, {
-				AnchorPoint = Vector2.new(0.5, 0.5);
-				Position = UDim2.new(0.5, 0, 0.5, 0);
-				Size = UDim2.new(1, -40, 1, -40);
+				AnchorPoint = Vector2.new(0.5, 1);
+				Position = UDim2.new(0.5, 0, 0.5, -20);
+				Size = UDim2.new(1, -40, 0.5, -40);
 
 				Text = "Generate";
 
 				Activated = function(rbx)
 					store:dispatch({
 						type = "GenerateTerrain";
+					})
+				end;
+			});
+			Scale = Roact.createElement(Components.TextBox, {
+				AnchorPoint = Vector2.new(0.5, 0);
+				Position = UDim2.new(0.5, 0, 0.5, 20);
+				Size = UDim2.new(1, -40, 0.5, -40);
+
+				Text = store:getState().Scale;
+				TextColor3 = Theme:GetColor(Enum.StudioStyleGuideColor.MainText);
+					
+				Shadow = true;
+				ShadowOffset = Vector2.new(1, 1);
+
+				TextChanged = function(rbx)
+					return rbx.Text:gsub("%D+", "")
+				end;
+
+				FocusLost = function(rbx)
+					store:dispatch({
+						type = "SetScale";
+						scale = rbx.Text
 					})
 				end;
 			})

@@ -345,6 +345,7 @@ stds.roblox = {
 					"LeftLowerLeg", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "RightUpperLeg",
 					"LeftHand", "LeftLowerArm", "LeftUpperArm", "RightHand", "RightLowerArm",
 					"RightUpperArm", "RootPart", "Unknown"}),
+				BorderMode = def_enum({"Outline", "Middle", "Inset"}),
 				Button = def_enum({"Jump", "Dismount"}),
 				ButtonStyle = def_enum({"Custom", "RobloxButtonDefault", "RobloxButton",
 					"RobloxRoundButton", "RobloxRoundDefaultButton", "RobloxRoundDropdownButton"}),

@@ -53,4 +53,5 @@ return {
 			return nextDispatch(action)
 		end
 	end;
+	--Rodux.loggerMiddleware;
 }

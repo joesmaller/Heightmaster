@@ -17,6 +17,9 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Terrain = Workspace:WaitForChild("Terrain")
 
+-- Modules
+local Materials = require(script:WaitForChild("Materials"))
+
 
 --// Code //--
 
@@ -40,6 +43,34 @@ local function inverseLerp(value, minValue, maxValue)
 	return (value - minValue) / (maxValue - minValue)
 end
 
+-- Returns the nearest material to the color
+function Generator.getMaterialFromColor(color, state)
+	assert(typeof(color) == "Color3", "Argument #1 (color) must be Color3 value")
+
+	local materials = {}
+	local rgb = Vector3.new(color.R * 255, color.G * 255, color.B * 255)
+	local r, g, b = rgb.X, rgb.Y, rgb.Z
+
+	for index, material in pairs(Materials) do
+		if (not state.DisabledMaterials[index]) then
+			local materialVector = Vector3.new(material.color.R * 255, material.color.G * 255, material.color.B * 255)
+
+			local distance = math.sqrt(
+				(materialVector.X - r) ^ 2 +
+				(materialVector.Y - g) ^ 2 +
+				(materialVector.Z - b) ^ 2
+			)
+			table.insert(materials, {index, distance})
+		end
+	end
+
+	table.sort(materials, function(A, B)
+		return A[2] < B[2]
+	end)
+
+	return Materials[materials[1][1]].enum
+end
+
 function Generator.Generate(heightmap, colormap, store)
 	assert(type(heightmap) == "table", "Argument #1 (heightmap) must be a valid heightmap")
 
@@ -55,11 +86,12 @@ function Generator.Generate(heightmap, colormap, store)
 			local height = (value.R / 255)
 			
 			-- Get the material color
-			local color = Color3.new(0.5, 0.5, 0.5)
+			local material = Enum.Material.Water
 			if (colormap) then
 				if (colormap[x]) then
 					if (colormap[x][y]) then
-						color = colormap[x][y]
+						local color = colormap[x][y]
+						material = Generator.getMaterialFromColor(color, state)
 					end
 				end
 			end
@@ -88,17 +120,17 @@ function Generator.Generate(heightmap, colormap, store)
 
 			for regX = 1, regSize.X do
 				for regY = 1, regSize.Y do
-					local material = Enum.Material.Rock
 					local occupancy = 1
+					local mat = Enum.Material.Rock
 					if (regY >= (regSize.Y - 3)) then
-						material = Enum.Material.Grass
+						mat = material
 						occupancy = ((height * scale) % 1)
 						if (occupancy == 0) then
 							occupancy = 1
 						end
 					end
 					for regZ = 1, regSize.Z do
-						materials[regX][regY][regZ] = material
+						materials[regX][regY][regZ] = mat
 						occupancies[regX][regY][regZ] = occupancy
 					end
 				end

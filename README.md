@@ -1,3 +1,8 @@
+## Before we begin
+This plugin is no longer being worked on, it's advisable to use the in-built heightmap importer in Roblox Studio — it is more perfomant, has less terracing and is more flexible in regards to generation size.
+
+---
+
 # Heightmaster
 A Roblox Studio plugin that converts heightmaps into terrain.
 
